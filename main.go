@@ -7,15 +7,26 @@ import (
 )
 
 // formhandler function
+
+// w http.ResponseWriter - used to write response back to the client
+// r *http.Request - incoming HTTP request
 func formHandler(w http.ResponseWriter, r *http.Request) {
+
+	// parse the form data from the request body using r.ParseForm()
+	// if error occurs -> writes an error messsage to the response writer and returns
 	if err := r.ParseForm(); err != nil {
 		fmt.Fprintf(w, "ParseForm() err: %v", err)
 		return
 	}
 
+	// if parsing is successful, it writes POST request successful to the response writer
 	fmt.Fprintf(w, "POST request successful")
+
+	// it then extracts the values for keys "name" and "address" using r.FormValue(args)
 	name := r.FormValue("name")
 	address := r.FormValue("address")
+
+	// writes the extracted name and address values to the response writer
 	fmt.Fprintf(w, "Name = %s \n", name)
 	fmt.Fprintf(w, "Address = %s \n", address)
 }
